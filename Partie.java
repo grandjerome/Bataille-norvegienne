@@ -1,4 +1,4 @@
-package projet1;
+package Moteur;
 
 import java.util.Collection;
 import java.util.Iterator;
