@@ -1,6 +1,6 @@
 package Moteur;
 
-public class Huit extends projet1.CarteSpeciale {
+public class Huit extends Moteur.CarteSpeciale {
 
 	public void passerTour() {
 
