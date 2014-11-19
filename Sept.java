@@ -1,6 +1,6 @@
-package projet1;
+package Moteur;
 
-public class Sept extends projet1.CarteSpeciale {
+public class Sept extends Moteur.CarteSpeciale {
 
 	public void jouerCarteInferieure() {
 
