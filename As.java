@@ -1,6 +1,6 @@
 package Moteur;
 
-public class As extends projet1.CarteSpeciale {
+public class As extends Moteur.CarteSpeciale {
 
 	public void donnerTalon() {
 
