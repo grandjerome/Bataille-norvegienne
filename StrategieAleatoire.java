@@ -1,4 +1,4 @@
-package projet1;
+package Moteur;
 
 public class StrategieAleatoire implements Strategie {
 
