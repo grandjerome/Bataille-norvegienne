@@ -1,4 +1,4 @@
-package projet1;
+package Moteur;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -18,17 +18,17 @@ public class Joueur {
 	/*
 	 * (non-javadoc)
 	 */
-	private Main main;
+	private Carte main;
 
 	/*
 	 * (non-javadoc)
 	 */
-	private FaceVisible faceVisible;
+	private Carte faceVisible;
 
 	/*
 	 * (non-javadoc)
 	 */
-	private FaceCachee faceCachee;
+	private Carte faceCachee;
 
 	/*
 	 * (non-javadoc)
@@ -72,7 +72,7 @@ public class Joueur {
 	 * 
 	 */
 
-	public Main getMain() {
+	public Carte getMain() {
 		return main;
 	}
 
@@ -83,7 +83,7 @@ public class Joueur {
 	 *            The main to set.
 	 * 
 	 */
-	public void setMain(Main main) {
+	public void setMain(Carte main) {
 		this.main = main;
 	}
 
@@ -94,7 +94,7 @@ public class Joueur {
 	 * 
 	 */
 
-	public FaceVisible getFaceVisible() {
+	public Carte getFaceVisible() {
 		return faceVisible;
 	}
 
@@ -105,7 +105,7 @@ public class Joueur {
 	 *            The faceVisible to set.
 	 * 
 	 */
-	public void setFaceVisible(FaceVisible faceVisible) {
+	public void setFaceVisible(Carte faceVisible) {
 		this.faceVisible = faceVisible;
 	}
 
@@ -116,7 +116,7 @@ public class Joueur {
 	 * 
 	 */
 
-	public FaceCachee getFaceCachee() {
+	public Carte getFaceCachee() {
 		return faceCachee;
 	}
 
@@ -127,84 +127,10 @@ public class Joueur {
 	 *            The faceCachee to set.
 	 * 
 	 */
-	public void setFaceCachee(FaceCachee faceCachee) {
+	public void setFaceCachee(Carte faceCachee) {
 		this.faceCachee = faceCachee;
 	}
 
 }
 
-// /**
-// * Ensures that this collection contains the specified element (optional
-// * operation).
-// *
-// * @param element
-// * whose presence in this collection is to be ensured.
-// * @see java.util.Collection#add(Object)
-// *
-// */
-// public boolean addCarte(Carte carte) {
-// return this.carte.add(carte);
-// }
-// /**
-// * Setter of the property <tt>carte</tt>
-// *
-// * @param carte
-// * the carte to set.
-// *
-// */
-// public void setCarte(Collection<Carte> carte) {
-// this.carte = carte;
-// }
-// /**
-// * Removes a single instance of the specified element from this
-// * collection, if it is present (optional operation).
-// *
-// * @param element
-// * to be removed from this collection, if present.
-// * @see java.util.Collection#add(Object)
-// *
-// */
-// public boolean removeCarte(Carte carte) {
-// return this.carte.remove(carte);
-// }
-// /**
-// * Getter of the property <tt>carte</tt>
-// *
-// * @return Returns the carte.
-// *
-// */
-//
-// public Collection<Carte> getCarte() {
-// return carte;
-// }
-// /**
-// * Returns the number of elements in this collection.
-// *
-// * @return the number of elements in this collection
-// * @see java.util.Collection#size()
-// *
-// */
-// public int carteSize() {
-// return carte.size();
-// }
-// /**
-// * Setter of the property <tt>partie</tt>
-// *
-// * @param partie
-// * The partie to set.
-// *
-// */
-// public void setPartie(Partie partie) {
-// this.partie = partie;
-// }
-// /**
-// * Getter of the property <tt>partie</tt>
-// *
-// * @return Returns the partie.
-// *
-// */
-//
-// public Partie getPartie() {
-// return partie;
-// }
 
