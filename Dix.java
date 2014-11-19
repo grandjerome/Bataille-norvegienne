@@ -1,6 +1,6 @@
 package Moteur;
 
-public class Dix extends projet1.CarteSpeciale {
+public class Dix extends Moteur.CarteSpeciale {
 
 	public void poserCarte() {
 
