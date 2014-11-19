@@ -1,6 +1,6 @@
 package Moteur;
 
-public class Deux extends projet1.CarteSpeciale {
+public class Deux extends Moteur.CarteSpeciale {
 
 	public void repartirDuDeux() {
 
