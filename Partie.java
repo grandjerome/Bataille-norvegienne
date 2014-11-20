@@ -2,13 +2,14 @@ package Moteur;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Partie {
 
 	/*
 	 * (non-javadoc)
 	 */
-	private int nombreJoueurVirtuel;
+	private int nombreJoueurVirtuel=0;
 
 	/*
 	 * (non-javadoc)
@@ -20,6 +21,15 @@ public class Partie {
 */
 	private Collection<Joueur> joueur;
 
+	
+	
+	
+	static public void main(String[] args){
+		
+	Partie partie = new Partie();
+	partie.debutPartie();
+	}
+
 	public void determinerVainqueur() {
 
 	}
@@ -29,7 +39,19 @@ public class Partie {
 	}
 
 	public void debutPartie() {
-
+		Scanner sc = new Scanner(System.in);
+		Scanner sc2 = new Scanner(System.in);
+		System.out.println("Combien voulez vous de joueur virtuels (1 -> *)");
+		int nbJoueur = sc.nextInt();
+		this.nombreJoueurVirtuel=nbJoueur;
+		System.out.println("quel est votre nom ?");
+		String nomJoueur =sc2.nextLine();
+		Joueur joueur = new Joueur(nomJoueur);
+		JoueurVirtuel[] joueurVirtuel = new JoueurVirtuel[this.nombreJoueurVirtuel];
+		for (int i = 0;i<this.nombreJoueurVirtuel;i++){
+			joueurVirtuel[i] = new JoueurVirtuel();
+		}
+		Carte.distribuerCarte(nombreJoueurVirtuel);
 	}
 
 	/**
