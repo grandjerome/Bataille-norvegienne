@@ -15,15 +15,13 @@ public class JoueurVirtuel extends Joueur{
 	 */
 	private int nbCartes;
 	private String nomJoueur;
-	private boolean joueurEnJeu;
-	public String[] nom={"Roger","Patrick","Corentin","Emilie","Albert","Alberta","Alberte","Albertine","Albin","Alda","Aldo","Aldegonde","AlÃ¨the","Alex","Alexandra"};//,Alexandre,Alexandrine,Alexia,Alexiane,Alexis,Aleyde,Alfred,Alfreda,Alice,Alida,Aline,Alix,AloÃ¯s,Aloysius,Alphonse,Alphonsine,AmaÃ«l,Amance,Amand,Amandine,Amoury,Ambroise,AmÃ©dÃ©e,AmÃ©lie,Amos,AnaÃ¯s,Anastase,Anastasie,Anatole,Andoche,AndrÃ©,AndrÃ©e,Ange,AngÃ¨le,AngÃ©line,AngÃ©lique,Anicet,Anita,Anna,Annabelle,Anne,Annette,Annick,Annie,Annonciade,Anouchka,Anouck,Anselme,Anthelme,Anthony,Antoine,Antoinette,Antonin,Apollinaire,Apolline,Apollos,Arabelle,Arcadius,Arcady,Archibald,Ariane,Arielle,Aristide,Arlette,Armand,Armande,Armel,Armelle,Arnaud,Arnold,Arnould,ArsÃ¨ne,Arthur,Astrid,Athanase,Auberi,Aubert,Aubin,Aude,Audrey,Augusta,Auguste,Augustin,Augustine,Aure,AurÃ¨le,AurÃ©lia,AurÃ©lie,AurÃ©lien,Aurore,Ava,Avit,Axel,Axelle,Aymar,Aymeric,Aymone,Babette,Babine,Babita,Balbine,Balthazar,Baptiste,Barbara,Barbe,Barberine,BarnabÃ©,Barnard,BarthÃ©lÃ©my,BartolomÃ©,Basile,Bastien,Bastienne,Bathilde,Baudouin,BÃ©atrice,Beatrix,BÃ©nÃ©dicte,Benjamin,Benjamine,BenoÃ®t,BenoÃ®te,BÃ©renger};
+	public String[] nom={"Roger","Patrick","Corentin","Emilie","Albert","Alberta","Alberte","Albertine","Albin","Alda","Aldo","Aldegonde","Alèthe","Alex","Alexandra"};//,Alexandre,Alexandrine,Alexia,Alexiane,Alexis,Aleyde,Alfred,Alfreda,Alice,Alida,Aline,Alix,Aloïs,Aloysius,Alphonse,Alphonsine,Amaël,Amance,Amand,Amandine,Amoury,Ambroise,Amédée,Amélie,Amos,Anaïs,Anastase,Anastasie,Anatole,Andoche,André,Andrée,Ange,Angèle,Angéline,Angélique,Anicet,Anita,Anna,Annabelle,Anne,Annette,Annick,Annie,Annonciade,Anouchka,Anouck,Anselme,Anthelme,Anthony,Antoine,Antoinette,Antonin,Apollinaire,Apolline,Apollos,Arabelle,Arcadius,Arcady,Archibald,Ariane,Arielle,Aristide,Arlette,Armand,Armande,Armel,Armelle,Arnaud,Arnold,Arnould,Arsène,Arthur,Astrid,Athanase,Auberi,Aubert,Aubin,Aude,Audrey,Augusta,Auguste,Augustin,Augustine,Aure,Aurèle,Aurélia,Aurélie,Aurélien,Aurore,Ava,Avit,Axel,Axelle,Aymar,Aymeric,Aymone,Babette,Babine,Babita,Balbine,Balthazar,Baptiste,Barbara,Barbe,Barberine,Barnabé,Barnard,Barthélémy,Bartolomé,Basile,Bastien,Bastienne,Bathilde,Baudouin,Béatrice,Beatrix,Bénédicte,Benjamin,Benjamine,Benoît,Benoîte,Bérenger};
 	static private int indiceNom=0;
 	/**
 *
 */
-
 	
-	
+	private Strategie strategie;
 	private ArrayList<Carte> main;
 	private HashSet<Carte> faceCachee;
 	private HashSet<Carte> faceVisible;
@@ -32,7 +30,7 @@ public class JoueurVirtuel extends Joueur{
 		return(faceCachee);
 	}
 	public ArrayList<Carte> getmain(){
-		return(main);
+		return main;
 	}
 	public HashSet<Carte> getfaceVisible(){
 		return(faceVisible);
@@ -43,15 +41,10 @@ public class JoueurVirtuel extends Joueur{
 		}
 		this.nomJoueur=nom[indiceNom];
 		indiceNom++;
-		joueurEnJeu=true;
-		
-	}
-	public void SortieJoueur(){
-		Partie.partie.sortirJoueurVirtuel();
-		joueurEnJeu=false;
+		this.strategie = new StrategieLeMeilleurPourLaFin();	
 	}
 	public void echangerCarte() {
-
+		
 	}
 	public void creerList(){
 		main = new ArrayList<Carte>();
@@ -60,9 +53,34 @@ public class JoueurVirtuel extends Joueur{
 		//super.creerList();
 	}
 	public void poserCarte() {
-
+	}
+	
+	public void piocher(int nbCarte){
+		int i=0;
+		while(!(Partie.partie.getTasDeCarte().getpioche().isEmpty()) && i<nbCarte)
+		{
+		this.main.add(Partie.partie.getTasDeCarte().getpioche().remove());
+		i++;
+		}
+	}
+	
+	
+	public int determinernbCartesJouables(ArrayList<Carte> main){
+		int nbCartesJouables=0;
+		ListIterator<Carte> it = main.listIterator();
+		while (it.hasNext()){
+			Carte element = it.next();
+			if (element.determinerCarteJouable()){
+				nbCartesJouables++;
+			}			
+		}
+		//System.out.println("l'ordi peut jouer "+nbCartesJouables+" cartes");
+		return nbCartesJouables;
 	}
 
+	
+
+	
 	/**
 	 * Getter of the property <tt>nbCartes</tt>
 	 * 
@@ -84,6 +102,7 @@ public class JoueurVirtuel extends Joueur{
 	public void setNbCartes(int nbCartes) {
 		this.nbCartes = nbCartes;
 	}
+	
 
 	/**
 	 * Getter of the property <tt>main</tt>
@@ -101,22 +120,11 @@ public class JoueurVirtuel extends Joueur{
 	 * 
 	 */
 	public void jouerCarte(){
-		piocher(3);
+		strategie.poserCarteStrategique(this);
 		
 	}
 	public String toString(){
 		return("Joueur Virtuel "+nomJoueur+" ");
 	}
-	public void piocher(int nbCarte){
-		int i=0;
-		while(!(Partie.partie.getTasDeCarte().getpioche().isEmpty()) && i<nbCarte)
-		{
-		this.main.add(Partie.partie.getTasDeCarte().getpioche().remove());
-		i++;
-		}
-	}
-
-	
 
 }
-

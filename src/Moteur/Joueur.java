@@ -116,6 +116,10 @@ public class Joueur {
 					 //System.out.println(Partie.partie.getTasDeCarte().getTalon().get(0));
 					 collection.remove(element);
 					 ((CarteSpeciale) element).jouerEffet();
+					 if(main.size()<3){
+						 piocher(1);
+					 }
+					 
 					 
 					 
 			 }
@@ -130,7 +134,9 @@ public class Joueur {
 						 Partie.partie.getTasDeCarte().getTalon().add(element);
 						 //System.out.println(Partie.partie.getTasDeCarte().getTalon().get(0));
 						 collection.remove(element);
-						 
+						 if(main.size()<3){
+							 piocher(1);
+						 }
 					 }
 					 
 			 
