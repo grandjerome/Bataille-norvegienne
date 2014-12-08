@@ -3,6 +3,7 @@ package Moteur;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Scanner;
@@ -54,16 +55,35 @@ public class Partie {
 	public ArrayList<Joueur> getlistJoueur(){
 		return (this.listJoueur);
 	}
-	public void debutPartie() {
+	public void setNbJoueur(){
+		try{
 		Scanner sc = new Scanner(System.in);
-		Scanner sc2 = new Scanner(System.in);
-		Scanner sc3 = new Scanner(System.in);
 		System.out.println("Combien voulez vous de joueur virtuels (1 -> *)");
 		int nbJoueur = sc.nextInt();
 		this.nombreJoueurVirtuel=nbJoueur;
+		}
+		catch (InputMismatchException e){
+			System.out.println("n'avez pas entré un nombre !");
+			setNbJoueur();
+		}
+	}
+	public String setNomJoueur(){
+		String nomJoueur=null;
+		try{
+		Scanner sc = new Scanner(System.in);
 		System.out.println("quel est votre nom ? \n \n");
-		String nomJoueur =sc2.nextLine();
+		nomJoueur =sc.nextLine();}
+		catch(InputMismatchException e){
+			System.out.println("n'avez pas entré de texte !");
+			setNomJoueur();
+		}
+		return(nomJoueur);
+	}
+	public void debutPartie() {
 		
+		setNbJoueur();
+		
+		String nomJoueur=setNomJoueur();
 		listJoueur = new ArrayList<Joueur>();
 		
 		Joueur joueur = new Joueur(nomJoueur);
