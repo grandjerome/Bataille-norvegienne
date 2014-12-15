@@ -15,15 +15,15 @@ public class Joueur {
 	 * (non-javadoc)
 	 */
 	
-	private int nbCartes;
+	protected int nbCartes;
 
 
-	private String nomJoueur;
+	protected String nomJoueur;
 	
 	
-	private ArrayList<Carte> main;
-	private HashSet<Carte> faceCachee;
-	private HashSet<Carte> faceVisible;
+	protected ArrayList<Carte> main;
+	protected HashSet<Carte> faceCachee;
+	protected HashSet<Carte> faceVisible;
 	private ArrayList<Carte> carteaposer;
 	public boolean JoueurEnJeu=true;
 	public Joueur(){
@@ -101,7 +101,7 @@ public class Joueur {
 			faceVisible.add(list.get(i));
 		}
 	}
-	public boolean poserCarte(ArrayList<Carte> carteaposer,Collection<Carte> collection) { 
+	public boolean poserCarte(ArrayList<Carte> carteaposer) { 
 		 boolean cartejouable=carteaposer.get(0).determinerCarteJouable();
 		 
 		 if (cartejouable){
@@ -114,8 +114,12 @@ public class Joueur {
 					 //System.out.println(element.getCouleur()+ " "+element.getValeur());
 					 Partie.partie.getTasDeCarte().getTalon().add(element);
 					 //System.out.println(Partie.partie.getTasDeCarte().getTalon().get(0));
-					 collection.remove(element);
+					 main.remove(element);
 					 ((CarteSpeciale) element).jouerEffet();
+					 if(main.size()<3){
+						 piocher(1);
+					 }
+					 
 					 
 					 
 			 }
@@ -129,8 +133,10 @@ public class Joueur {
 						 //System.out.println(element.getCouleur()+ " "+element.getValeur());
 						 Partie.partie.getTasDeCarte().getTalon().add(element);
 						 //System.out.println(Partie.partie.getTasDeCarte().getTalon().get(0));
-						 collection.remove(element);
-						 
+						 main.remove(element);
+						 if(main.size()<3){
+							 piocher(1);
+						 }
 					 }
 					 
 			 
@@ -245,7 +251,7 @@ public class Joueur {
 			}
 			//->exception identique=false
 			if (identique){
-				carteposee = poserCarte(carteaposer,main);	
+				carteposee = poserCarte(carteaposer);	
 			}
 			
 			}}}}
