@@ -28,18 +28,30 @@ public class StrategieLeMeilleurPourLaFin implements Strategie{
 		 if (cartesJouables.size()>0){
 			 if (cartesNormalesJouables.size()>0){
 				 int index = random.nextInt(cartesNormalesJouables.size());
+<<<<<<< HEAD
 				 //int index = cartesNormalesJouables.size();
 				 carteAPoser=cartesNormalesJouables.get(index);
 				 System.out.println("------cartes ï¿½ poser : "+carteAPoser); 
+=======
+				 carteAPoser=cartesNormalesJouables.get(index);
+				 System.out.println("------cartes à poser : "+cartesAPoser.toString()); 
+>>>>>>> origin/master
 			 }
 			 else {
 				 int index = random.nextInt(cartesJouables.size());
 				 carteAPoser=cartesJouables.get(index);
+<<<<<<< HEAD
 				 System.out.println("------cartes ï¿½ poser : "+carteAPoser);//cartesaposer
 			 }
 			 ListIterator<Carte> it2 = cartesJouables.listIterator();
 			while (it2.hasNext()){
 			 	Carte element = it2.next();
+=======
+				 System.out.println("------cartes à poser : "+cartesAPoser.toString());
+			 }
+			while (it.hasNext()){
+			 	Carte element = it.next();
+>>>>>>> origin/master
 			 	if (element.getValeur()==carteAPoser.getValeur()){
 			 		cartesAPoser.add(element);
 			 		nbCartesAPoser++;
@@ -51,7 +63,11 @@ public class StrategieLeMeilleurPourLaFin implements Strategie{
 			 Partie.partie.getTasDeCarte().donnerTalon(j);
 		 }
 
+<<<<<<< HEAD
 		j.poserCarte(cartesAPoser);
+=======
+		j.poserCarte(cartesAPoser, j.getmain());
+>>>>>>> origin/master
 		piocher(cartesAPoser.size(), j);
 
 	}

@@ -29,8 +29,13 @@ public class StrategieAleatoire implements Strategie {
 			 			nbCartesAPoser++;
 			 		}			
 			 	}
+<<<<<<< HEAD
 			System.out.println("------cartes ï¿½ poser : "+cartesAPoser.toString());
 			j.poserCarte(cartesAPoser);
+=======
+			System.out.println("------cartes à poser : "+cartesAPoser.toString());
+			j.poserCarte(cartesAPoser, j.getmain());
+>>>>>>> origin/master
 			piocher(cartesAPoser.size(), j);
 		 }
 		 else {

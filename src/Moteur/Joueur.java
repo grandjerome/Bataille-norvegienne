@@ -133,7 +133,11 @@ public class Joueur {
 						 //System.out.println(element.getCouleur()+ " "+element.getValeur());
 						 Partie.partie.getTasDeCarte().getTalon().add(element);
 						 //System.out.println(Partie.partie.getTasDeCarte().getTalon().get(0));
+<<<<<<< HEAD
 						 main.remove(element);
+=======
+						 collection.remove(element);
+>>>>>>> origin/master
 						 if(main.size()<3){
 							 piocher(1);
 						 }
