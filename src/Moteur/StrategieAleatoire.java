@@ -9,16 +9,14 @@ public class StrategieAleatoire implements Strategie {
 	public void poserCarteStrategique(JoueurVirtuel j) {
 		 ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		 ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
-		 int nbCartesAPoser=0;
 		 
 		 Random random = new Random();
 		 cartesJouables = determinerCartesJouables(j.getmain());
-		 System.out.println("--------main de "+j.nom+" : "+j.getmain().toString());
+		 System.out.println("--------main de "+j.getNom()+" : "+j.getmain().toString());
 		 System.out.println("-----cartes jouables : "+cartesJouables.toString());
 		 
 		 //System.out.println(cartesJouables.toString());
 		 if (cartesJouables.size()>0){
-			 	nbCartesAPoser=1;
 			 	int index = random.nextInt(cartesJouables.size());
 			 	Carte carteAPoser = cartesJouables.get(index);
 			 	ListIterator<Carte> it = j.getmain().listIterator();
@@ -26,17 +24,36 @@ public class StrategieAleatoire implements Strategie {
 			 		Carte element = it.next();
 			 		if (element.getValeur()==carteAPoser.getValeur()){
 			 			cartesAPoser.add(element);
-			 			nbCartesAPoser++;
 			 		}			
 			 	}
-<<<<<<< HEAD
-			System.out.println("------cartes � poser : "+cartesAPoser.toString());
-			j.poserCarte(cartesAPoser);
-=======
-			System.out.println("------cartes � poser : "+cartesAPoser.toString());
-			j.poserCarte(cartesAPoser, j.getmain());
->>>>>>> origin/master
-			piocher(cartesAPoser.size(), j);
+			System.out.println("------cartes à poser : "+cartesAPoser.toString());
+			if (cartesAPoser.get(0).estAs()){
+				ListIterator<Joueur> it2 = Partie.partie.getlistJoueur().listIterator();
+				Joueur joueurRecupereTalon = it2.next();
+				System.out.println("joueur qui recupere le talon : "+joueurRecupereTalon);
+				int nbMinCartesEnMain =joueurRecupereTalon.getmain().size();
+				while (it2.hasNext()){
+					Joueur element = it2.next();
+					if (element.getmain().size()<nbMinCartesEnMain&&(!(element.equals(j)))){
+						nbMinCartesEnMain=element.getmain().size();
+						joueurRecupereTalon=element;
+					}
+					System.out.println("dans iterator : "+element);
+				}
+				ListIterator<Carte> it3 = cartesAPoser.listIterator();
+				while (it3.hasNext()){
+					Carte element = it3.next();
+					Partie.partie.getTasDeCarte().getTalon().add(element);
+					j.getmain().remove(element);
+				}	
+				Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
+				System.out.println(j+" donne le talon à "+Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
+				piocher(cartesAPoser.size(), j);
+			}
+			else {
+				j.poserCarte(cartesAPoser, j.getmain());
+				piocher(cartesAPoser.size(), j); 
+			}
 		 }
 		 else {
 			 System.out.println("L'ordi ne peut pas jouer!");
@@ -60,7 +77,7 @@ public class StrategieAleatoire implements Strategie {
 		return cartesJouables;
 	}
 	
-	public void echangerCartes(){
+	public void echangerCarte(JoueurVirtuel j){
 		
 	}
 	
