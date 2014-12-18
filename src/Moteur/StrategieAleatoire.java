@@ -9,40 +9,31 @@ public class StrategieAleatoire implements Strategie {
 	public void poserCarteStrategique(JoueurVirtuel j) {
 		 ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		 ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
-		 
 		 Random random = new Random();
-		 cartesJouables = determinerCartesJouables(j.getmain());
-		 System.out.println("--------main de "+j.getNom()+" : "+j.getmain().toString());
+		 Carte carteAPoser=null;
+		 System.out.println("--------main de "+j+" : "+j.getmain().toString());
+		 cartesJouables = determinerCartesJouables(j.getmain());		 
 		 System.out.println("-----cartes jouables : "+cartesJouables.toString());
-		 
-		 //System.out.println(cartesJouables.toString());
+
 		 if (cartesJouables.size()>0){
-			 	int index = random.nextInt(cartesJouables.size());
-			 	Carte carteAPoser = cartesJouables.get(index);
-			 	ListIterator<Carte> it = j.getmain().listIterator();
-			 	while (it.hasNext()){
-			 		Carte element = it.next();
-			 		if (element.getValeur()==carteAPoser.getValeur()){
-			 			cartesAPoser.add(element);
-			 		}			
-			 	}
-			System.out.println("------cartes à poser : "+cartesAPoser.toString());
-			if (cartesAPoser.get(0).estAs()){
-				ListIterator<Joueur> it2 = Partie.partie.getlistJoueur().listIterator();
-				Joueur joueurRecupereTalon = it2.next();
-				System.out.println("joueur qui recupere le talon : "+joueurRecupereTalon);
-				int nbMinCartesEnMain =joueurRecupereTalon.getmain().size();
-				while (it2.hasNext()){
-					Joueur element = it2.next();
-					if (element.getmain().size()<nbMinCartesEnMain&&(!(element.equals(j)))){
-						nbMinCartesEnMain=element.getmain().size();
-						joueurRecupereTalon=element;
-					}
-					System.out.println("dans iterator : "+element);
+			 
+			 	carteAPoser=determinerCarteAPoser(cartesJouables);
+			 	cartesAPoser=determinerCartesAPoser(carteAPoser, cartesJouables);
+			
+			
+			
+			if (carteAPoser.estAs()){
+				
+				int i = random.nextInt(Partie.partie.getlistJoueur().size());
+				Joueur joueurRecupereTalon=Partie.partie.getlistJoueur().get(i);
+				while (joueurRecupereTalon.getNom(joueurRecupereTalon)==j.getNom(joueurRecupereTalon)){
+					i = random.nextInt(Partie.partie.getlistJoueur().size());
+					joueurRecupereTalon=Partie.partie.getlistJoueur().get(i);
 				}
-				ListIterator<Carte> it3 = cartesAPoser.listIterator();
-				while (it3.hasNext()){
-					Carte element = it3.next();
+						
+				ListIterator<Carte> it = cartesAPoser.listIterator();
+				while (it.hasNext()){
+					Carte element = it.next();
 					Partie.partie.getTasDeCarte().getTalon().add(element);
 					j.getmain().remove(element);
 				}	
@@ -64,6 +55,17 @@ public class StrategieAleatoire implements Strategie {
 		 
 	}
 	
+	public void echangerCarte(JoueurVirtuel j){		
+	}
+	
+	public void piocher(int nbCartesPosees,Joueur j){
+		for (int i=0; i<nbCartesPosees; i++){
+			if (j.getmain().size()<3){
+				j.piocher(1);
+			}
+		}
+	}
+
 	public ArrayList<Carte> determinerCartesJouables(ArrayList<Carte> main){
 		ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		ListIterator<Carte> it = main.listIterator();
@@ -77,16 +79,26 @@ public class StrategieAleatoire implements Strategie {
 		return cartesJouables;
 	}
 	
-	public void echangerCarte(JoueurVirtuel j){
-		
+	public Carte determinerCarteAPoser(ArrayList<Carte> cartesJouables){
+		Random random = new Random();
+		Carte carteAPoser=null;
+	 	int index = random.nextInt(cartesJouables.size());
+	 	carteAPoser = cartesJouables.get(index);
+	 	return carteAPoser;
 	}
 	
-	public void piocher(int nbCartesPosees,Joueur j){
-		for (int i=0; i<nbCartesPosees; i++){
-			if (j.getmain().size()<3){
-				j.piocher(1);
-			}
-		}
+	public ArrayList<Carte> determinerCartesAPoser(Carte carteAPoser, ArrayList<Carte> cartesJouables){
+		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
+	 	ListIterator<Carte> it = cartesJouables.listIterator();
+	 	while (it.hasNext()){
+	 		Carte element = it.next();
+	 		if (element.getValeur()==carteAPoser.getValeur()){
+	 			cartesAPoser.add(element);
+	 		}			
+	 	}
+	 	System.out.println("------cartes à poser : "+cartesAPoser.toString());
+		return cartesAPoser;
 	}
-
+	
+	
 }
