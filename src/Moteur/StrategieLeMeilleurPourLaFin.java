@@ -12,91 +12,54 @@ public class StrategieLeMeilleurPourLaFin implements Strategie{
 		ArrayList<Carte> cartesNormalesJouables = new ArrayList<Carte>();
 		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
 		Carte carteAPoser;
-		Random random = new Random();
-		 cartesJouables = determinerCartesJouables(j.getmain());
-		 System.out.println("--------main de "+j.nom+" : "+j.getmain().toString());
-		 	 
-		 ListIterator<Carte> it = cartesJouables.listIterator();
-		 	while (it.hasNext()){
-		 		Carte element = it.next();
-		 		if (element.estCarteSpeciale()==false){
-		 			cartesNormalesJouables.add(element);
-		 		}
-		 	}
-		 System.out.println("-----cartes normales jouables : "+cartesNormalesJouables.toString());
-		 
-		 if (cartesJouables.size()>0){
-			 if (cartesNormalesJouables.size()>0){
-				 ListIterator<Carte> it2= cartesNormalesJouables.listIterator();
-				 Carte cartePlusPetite=it2.next();
-				 while(it2.hasNext()){
-					 Carte element=it2.next();
-					 if (element.getValeur()<cartePlusPetite.getValeur()){
-						 cartePlusPetite=element;
-					 }
-				 } 
-				 carteAPoser=cartePlusPetite;
-				 System.out.println("------cartes à poser : "+carteAPoser.toString()); 
-			 }
-			 else {
-				 ListIterator<Carte> it2= cartesJouables.listIterator();
-				 Carte cartePlusPetite=it2.next();
-				 while(it2.hasNext()){
-					 Carte element=it2.next();
-					 if (element.getValeur()<cartePlusPetite.getValeur()){
-						 cartePlusPetite=element;
-					 }
-				 } 
-				 carteAPoser=cartePlusPetite;
-				 System.out.println("------cartes à poser : "+carteAPoser.toString());
-			 }
-			 ListIterator<Carte> it4 = cartesJouables.listIterator();
-			 while (it4.hasNext()){
-			 	Carte element = it4.next();
-			 	if (element.getValeur()==carteAPoser.getValeur()){
-			 		cartesAPoser.add(element);
-			 	}			
-			}
+		System.out.println("--------main de " + j + " : "+ j.getmain().toString());	
+		cartesJouables = determinerCartesJouables(j.getmain());
+		
+		
+		if (cartesJouables.size()>0){
+			cartesNormalesJouables = determinerCartesNormalesJouables(cartesJouables);
+			carteAPoser = determinerCarteAposer(cartesJouables,cartesNormalesJouables);
+			cartesAPoser = determinerCartesAPoser(carteAPoser, cartesJouables);
 			
 			
-			if (carteAPoser.estAs()){
-				ListIterator<Joueur> it2 = Partie.partie.getlistJoueur().listIterator();
-				Joueur joueurRecupereTalon = it2.next();
-				System.out.println("joueur qui recupere le talon : "+joueurRecupereTalon);
-				int nbMinCartesEnMain =joueurRecupereTalon.getmain().size();
-				while (it2.hasNext()){
-					Joueur element = it2.next();
-					if (element.getmain().size()<nbMinCartesEnMain&&(!(element.equals(j)))){
-						nbMinCartesEnMain=element.getmain().size();
-						joueurRecupereTalon=element;
+			if (carteAPoser.estAs()) {
+				ListIterator<Joueur> it = Partie.partie.getlistJoueur().listIterator();
+				Joueur joueurRecupereTalon = it.next();
+				int nbMinCartesEnMain = joueurRecupereTalon.getmain().size();
+				while (it.hasNext()) {
+					Joueur element = it.next();
+					if (element.getmain().size() < nbMinCartesEnMain && (element.getNom(element) != j.getNom(j))) {
+						nbMinCartesEnMain = element.getmain().size();
+						joueurRecupereTalon = element;
 					}
-					System.out.println("dans iterator : "+element);
 				}
-				ListIterator<Carte> it3 = cartesAPoser.listIterator();
-				while (it3.hasNext()){
-					Carte element = it3.next();
-					Partie.partie.getTasDeCarte().getTalon().add(element);
-					j.getmain().remove(element);
-				}	
-				Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
-				System.out.println(j+" donne le talon à "+Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
+				
+				ListIterator<Carte> it2 = cartesAPoser.listIterator();
+				while (it2.hasNext()) {
+					Carte element = it2.next();
+					Partie.partie.getTasDeCarte().getTalon().add(element);//pose la carte
+					j.getmain().remove(element);//retire de la main
+				}
+				Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get(Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon)));
+				System.out.println(j+ " donne le talon à "+ Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
 				piocher(cartesAPoser.size(), j);
-			}
+			} 
+			
+			
 			else {
 				j.poserCarte(cartesAPoser, j.getmain());
-				piocher(cartesAPoser.size(), j); 
+				piocher(cartesAPoser.size(), j);
 			}
-								
-			
-		 }
-		 else {
-			 System.out.println("L'ordi ne peut pas jouer!");
-			 Partie.partie.getTasDeCarte().donnerTalon(j);
-		 }
+		}
 
 
+		else {
+			System.out.println("L'ordi ne peut pas jouer!");
+			Partie.partie.getTasDeCarte().donnerTalon(j);
+		}
 
 	}
+	
 	
 	public void echangerCarte(JoueurVirtuel j){
 		ArrayList<Carte> mainCartesSpeciales = new ArrayList<Carte>();
@@ -166,4 +129,62 @@ public class StrategieLeMeilleurPourLaFin implements Strategie{
 		return cartesJouables;
 	}
 
+	public Carte determinerCarteAposer(ArrayList<Carte> cartesJouables, ArrayList<Carte> cartesNormalesJouables){
+		Carte carteAPoser=null;
+		if (cartesJouables.size() > 0) {
+			if (cartesNormalesJouables.size() > 0) {
+				ListIterator<Carte> it = cartesNormalesJouables.listIterator();
+				Carte cartePlusPetite = it.next();
+				while (it.hasNext()) {
+					Carte element = it.next();
+					if (element.getValeur() < cartePlusPetite.getValeur()) {
+						cartePlusPetite = element;
+					}
+				}
+				carteAPoser = cartePlusPetite;
+				//System.out.println("------cartes à poser : "+ carteAPoser.toString());
+			} else {
+				ListIterator<Carte> it = cartesJouables.listIterator();
+				Carte cartePlusPetite = it.next();
+				while (it.hasNext()) {
+					Carte element = it.next();
+					if (element.getValeur() < cartePlusPetite.getValeur()) {
+						cartePlusPetite = element;
+					}
+				}
+				carteAPoser = cartePlusPetite;
+				//System.out.println("------cartes à poser : "+ carteAPoser.toString());
+			}
+
+		}
+		return carteAPoser;
+	}
+	
+	public ArrayList<Carte> determinerCartesNormalesJouables(ArrayList<Carte> cartesJouables){
+		ArrayList<Carte> cartesNormalesJouables = new ArrayList<Carte>();
+		ListIterator<Carte> it = cartesJouables.listIterator();
+		while (it.hasNext()) {
+			Carte element = it.next();
+			if (element.estCarteSpeciale() == false) {
+				cartesNormalesJouables.add(element);
+			}
+		}
+		System.out.println("-----cartes normales jouables : "+ cartesNormalesJouables.toString());
+		return cartesNormalesJouables;
+	}
+
+	public ArrayList<Carte> determinerCartesAPoser(Carte carteAPoser, ArrayList<Carte> cartesJouables){
+		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
+		ListIterator<Carte> it = cartesJouables.listIterator();
+		while (it.hasNext()) {
+			Carte element = it.next();
+			if (element.getValeur() == carteAPoser.getValeur()) {
+				cartesAPoser.add(element);
+			}
+		}
+		return cartesAPoser;
+	}
+	
+	
 }
+
